@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Chicago Communities </title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src="https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js"></script>
+<script src= "chi_communities.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+
+
+
+<div id='map'></div>
+
+<script>
+
+function add1() { 
+
+    function addDataToMap1(data, map) {
+            var dataLayer = L.geoJson(data);
+            var map = L.mapbox.map('map', 'mapbox.streets',{
+                zoom: 5
+                }).fitBounds(dataLayer.getBounds());
+            dataLayer.addTo(map)
+        }
+    $.getJSON('http://localhost:8000/working/chicago_geojson/',function(data) { addDataToMap1(data,map); });
+    function addDataToMap1(data, map) {
+        var dataLayer = L.geoJson(chi_communities, {
+            onEachFeature: function(feature, layer) {            
+              var popupText = "<table><tr><th>Community Name: </th><td>" + feature.properties['community']+"</td></tr>";             
+              var popupText = popupText+ "<tr><th>Community ID: </th><td>" + feature.properties['area_numbe']+"</td></tr>";             
+             
+                layer.setStyle({color: '#1766B5', weight: 3, opacity: 1});
+                        layer.bindPopup(popupText, {autoPan:false, maxHeight:500, maxWidth:350} ); }
+                });
+            dataLayer.addTo(map);
+        console.log(map.fitBounds(dataLayer.getBounds()))};
+    };
+
+    function loadGeoJsonString(chi_communities) {
+    var geojson = JSON.parse(chi_communities);
+    map.data.addGeoJson(chi_communities);
+    zoom(map)
+}
+add1();
+
+</script>
+
+</body>
+</html>
