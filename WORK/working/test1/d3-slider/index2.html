@@ -109,14 +109,14 @@ d3.select("body").insert("h2", ":first-child").text(headline + init_year);
         let color = calcColorScale(data);
         
         // load map data and render it
-        d3.json("data/geomap.json", function(error, data) {
+        d3.json("chicagoCommunities.geojson", function(error, data) {
           console.log(data)
           if (error) throw error;
           // init map
           svg_map.append("g")
             .attr("class", "communities")
             .selectAll("path")
-            .data(topojson.feature(data, data.objects.geomap).features)
+            .data(topojson.feature(data, data.features).features)
             .enter().append("path")
               .attr("d", path)
               .attr("id", function(d) { return d.id; })
