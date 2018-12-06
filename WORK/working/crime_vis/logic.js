@@ -1,1 +1,1 @@
-var chiurl = "https://rawgit.com/chriswhong/chicago_geojson/master/chicagoCommunities.geojson";
+var chiurl = "https://cdn.jsdelivr.net/gh/chriswhong/chicago_geojson/chicagoCommunities.geojson";
